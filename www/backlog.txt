@@ -1,0 +1,10 @@
+// TODO's
+
+// Server side api: 
+                get phones
+                phones amount
+
+// client data parsing
+// client 
+        view appending and rebuilding
+        

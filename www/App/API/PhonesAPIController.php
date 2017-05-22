@@ -1,14 +1,10 @@
 <?php
 
-class ApiContoller {
-	
-	protected $model;
+class PhonesApiContoller {
 	
 	function __construct()
 	{
-        // header('Title')
-		header('Access-Control-Allow-Origin: *');
-		header("Content-Type: application/json");
+        parent::__construct():
 	}
 	
 	// действие (action), вызываемое по умолчанию
