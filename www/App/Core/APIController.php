@@ -1,6 +1,6 @@
 <?php
 
-class ApiContoller {
+class ApiController {
 	
 	protected $model;
 	
