@@ -1,0 +1,16 @@
+<div style="margin: 20px;" ng-controller="CartController">
+    <div class="row h">
+        <div class="cell head">Model</div>
+        <div class="cell head">Price</div>
+        <div class="cell head">Amount</div>
+    </div>
+    <div class="row" ng-repeat="item in orderlist" >
+        <div class="cell">{{item.Model}}</div>
+        <div class="cell num">{{item.Price}}</div>
+        <div class="cell num">{{item.Amount}}</div>
+    </div>
+    <div  class="row" >
+        <div style="display:inline-block; padding-top: 22px;">Total: {{totalsum}}</div>
+        <div style="display:inline-block; margin-left:445px;"><button class="btn btn-danger" onclick="angular:click()">Checkout</button></div>
+    </div>
+</div>

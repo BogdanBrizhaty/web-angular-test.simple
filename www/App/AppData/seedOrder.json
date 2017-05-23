@@ -1,0 +1,30 @@
+[
+    {
+        "Model" : "Lumia 925",
+        "Brand" : "Nokia",
+        "Price" : 10000,
+        "DisplayResolution" : "1280x768",
+        "DisplaySize" : 4.7,
+        "DisplayType" : "AMOLED",
+        "Camera" : 8.7,
+        "Battery" : 2000,
+        "Memory" : 8,
+        "Ram" : 1,
+        "FlashCardEnabled" : false,
+        "DualSim" : false  
+    },
+    {
+        "Model" : "Desire 628 DS",
+        "Brand" : "HTC",
+        "Price" : 3999,
+        "DisplayResolution" : "1280x720",
+        "DisplaySize" : 5,
+        "DisplayType" : "Super LCD",        
+        "Camera" : 13,
+        "Battery" : 2200,
+        "Memory" : 32,
+        "Ram" : 3,
+        "FlashCardEnabled" : true,
+        "DualSim" : true        
+    }
+]

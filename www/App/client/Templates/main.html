@@ -1,0 +1,11 @@
+<div ng-controller="AppController" style="width: 822px; padding:5px; margin:auto; margin-top: 25px; border: 1px solid lightgray;">
+    <!--240-->
+    <div class="shopitem" ng-repeat="phone in phones" style="width: 270px; display: inline-block;">
+        <img style="height: 150px; display: inline-block;" ng-src="{{ phone.url}}" />
+        <div style="display:inline-block;">
+            <div class="modeldescr h">{{phone.Model}}</div>
+            <div class="modeldescr" >Camera: {{phone.Camera}}</div>
+            <div class="modeldescr" >Screen: {{phone.DisplaySize}}"</div>
+        </div>
+    </div>
+</div>
