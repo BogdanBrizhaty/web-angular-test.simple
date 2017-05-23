@@ -1,14 +1,16 @@
 <?php
     require 'FilterArgs.php';
+    require_once 'PhonesDataProvider.php';
+
     class PhonesModel extends BaseModel
     {
         public function __construct()
         {
-            parent::__construct();
+            parent::__construct(new PhonesDataProvider());
         }
         public function phonesAmount()
         {
-            $phones = json_decode(file_get_contents("App/AppData/phones.json"));
+            $phones = $this->dataProvider->getAllData();
             return count($phones);
         }
         public function filteredAmount($filter)
@@ -16,7 +18,7 @@
             if ($filter === null || $filter === FilterArgs::Defaults())
                 return $this->phonesAmount();
 
-            $phones = json_decode(file_get_contents("App/AppData/phones.json"));
+            $phones = $this->dataProvider->getAllData();
 
             $phones = $this->applyFilter($phones, $filter);
 
@@ -24,7 +26,7 @@
         }
         public function getPhones($page)
         {
-            $phones = json_decode(file_get_contents("App/AppData/phones.json"));
+            $phones = $this->dataProvider->getAllData();
             return ($page > 0) ? $this->paginate($phones, $page) : $phones;
         }
         public function getFiltered($filter, $page)
@@ -32,7 +34,7 @@
             if ($filter === null || $filter === FilterArgs::Defaults())
                 return $this->getPhones();
 
-            $phones = json_decode(file_get_contents("App/AppData/phones.json"));
+            $phones = $this->dataProvider->getAllData();
 
             $phones = $this->applyFilter($phones, $filter);
 
@@ -40,7 +42,7 @@
         }
         public function defaultFilter()
         {
-            $phones = json_decode(file_get_contents("App/AppData/phones.json"));
+            $phones = $this->dataProvider->getAllData();
             return FilterArgs::Defaults($phones);            
         }
         private function paginate($phones, $page, $perPage = 9)

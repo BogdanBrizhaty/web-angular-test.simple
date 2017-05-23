@@ -2,10 +2,11 @@
 
 	class BaseModel
 	{
+		protected $dataProvider = null;
 		// protected $Repository;
-		public function __construct()//IRepository $Repository)
+		public function __construct(IDataProvider $dataProviderInjection)
 		{
-			// $this->Repository = $Repository;
+			$this->dataProvider = $dataProviderInjection;
 		}
 	}
 ?>
