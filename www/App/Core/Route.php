@@ -21,22 +21,17 @@ class Route
 		{
 			$action_name = $routes3[0];
 		}
-		// $model_name = $controller_name.'Model';
 		
 		$model_name = (strpos(strtolower($controller_name), 'api') !== false) ? str_replace('api', '', $controller_name).'Model' : $controller_name.'Model';
-
-		// echo $model_name;
 
 		$controller_name = $controller_name.'Controller';
 		$action_name = 'Action'.$action_name;
 
 		$model_file = strtolower($model_name).'.php';
 		$model_path = "App/Model/".$model_file;
-		// echo $model_path;
 		if(file_exists($model_path))
 		{
 			include "App/Model/".$model_file;
-			// echo 'exists';
 		}
 
 		$controller_file = strtolower($controller_name).'.php';

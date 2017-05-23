@@ -3,8 +3,12 @@
 // Server side api: 
                 get phones
                 phones amount
+                data filtering
+
+        controller must choose how to return data. model just returns sequence
 
 // client data parsing
 // client 
         view appending and rebuilding
         
+
