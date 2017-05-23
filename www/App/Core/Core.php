@@ -4,6 +4,8 @@
     require 'BaseModel.php';
     require 'BaseView.php';
 
+    require 'IDataProvider.php';
+
     require 'Route.php';
 
     // require 'DbWorker.php';    
