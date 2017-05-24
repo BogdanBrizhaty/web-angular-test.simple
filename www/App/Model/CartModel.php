@@ -8,7 +8,7 @@
         public function procceedOrder($orderList)
         {
             // make sure orderList is not empty
-            if (!isset($orderList))
+            if (is_null($orderList) || count($orderList) == 0)
                 return (object)['status' => false, 'msg' => 'Order List is Empty', 'invalid_products' => null];
 
             // if api is used not from our angular app 
