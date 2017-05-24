@@ -1,14 +1,13 @@
 angular.module('app', ['ngRoute'])
 
 .config(['$routeProvider', ($routeProvider) => {
-    // console.log("dddd");
     $routeProvider.when('/', { 
         templateUrl:'/App/client/Templates/main.html',
         Controller: 'AppController'
     })
 
     $routeProvider.when('/cart', {
-        templateUrl: 'cart.html',
+        templateUrl: '/App/client/Templates/cart.html',
         Controller: 'CartController'
     })
 }])
@@ -23,14 +22,10 @@ angular.module('app', ['ngRoute'])
   var getProducts = () =>{
       return productList;
   };
-  var productsearch = (e) => {
-      return e.Model == "ddd";
-  };
-  var getProduct = (model) => {
+  var getProduct = (model, brand) => {
     productList.find((e) => {
-        return e.Model == model;
+        return e.Model == model && e.Brand == brand;
     })
-    //   return 
   };
 
   return {
@@ -41,27 +36,26 @@ angular.module('app', ['ngRoute'])
 })
 
 .controller('AppController', ['$scope', '$http', 'productService', ($scope, $http, productService) => {
-    $http.get('/phonesapi/get?page=1').then((e) => {
+    $http.get('/phonesapi/get?page=0').then((e) => {
         $scope.phones = e.data;
         $scope.phones.forEach((element) => {
             var url = element.Model;
             element.url = '/uploads/' + url.replace(/\s+/g, "").toLowerCase() + ".jpg";
         })
-    })
+    });
+    $scope.onAddButtonClick = function (phone) {
+        console.log('clicked ' + phone.Model);
+        productService.addProduct(phone);
+    }
 }])
 
 .controller('CartController', ['$scope', '$http', 'productService', ($scope, $http, productService) => {
     
-    // console.log('Cart gett');
-    // $http.get('/seedOrder.json').then((e) => {
-    //     console.log(e.data);
-    //     $scope.orderlist = e.data;
-    //     var sum = 0.0;
-    //     $scope.orderlist.forEach((e) => {
-    //         e.Amount = 1;
-    //         sum += e.Price;
-    //     })
-    //     $scope.totalsum = sum;
-    // });
-
+    $scope.orderlist = productService.getProducts();
+        var sum = 0.0;
+        $scope.orderlist.forEach((e) => {
+            e.Amount = 1;
+            sum += e.Price;
+        })
+        $scope.totalsum = sum;
 }]);

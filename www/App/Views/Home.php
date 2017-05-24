@@ -16,7 +16,9 @@
             .h {
                 font-size: 1.4em;
                 overflow: hidden;
-                
+            }
+            .price {
+                font-size: 1.2em;
             }
             .row {
                 display: block;
