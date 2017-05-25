@@ -13,7 +13,7 @@
         public function ActionProcceedOrder()
         {
             $order = (isset($_POST['order'])) ? $_POST['order'] : null;
-            echo json_encode($this->model->procceedOrder($order));
+            echo json_encode($this->model->procceedOrder(json_decode($order)));
         }
     }
 ?>

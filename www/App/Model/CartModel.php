@@ -1,4 +1,6 @@
 <?php
+    require_once 'PhonesDataProvider.php';
+
     class CartModel extends BaseModel
     {
         public function __construct()
@@ -10,7 +12,7 @@
             // make sure orderList is not empty
             if (is_null($orderList) || count($orderList) == 0)
                 return (object)['status' => false, 'msg' => 'Order List is Empty', 'invalid_products' => null];
-
+            $phones = $this->dataProvider->getAllData();
             // if api is used not from our angular app 
             // make sure all items are stored in our product list
             $notFoundList = [];
