@@ -1,18 +1,27 @@
-<div ng-controller="AppController" style="width: 822px; padding:5px; margin:auto; margin-top: 25px; border: 1px solid lightgray;">
+<div ng-controller="AppController" >
     <!--240-->
-    <div class="shopitem" ng-repeat="phone in phones" style="width: 270px; display: inline-block;">
-        <div style="display:inline-flex; position: relative;">
-            <img style="height: 150px; " ng-src="{{ phone.url}}" /><br/>
+    <!--filter here -->
+    <!--search here-->
+    <div style="height: 75px; width: 822px; margin:auto; border: 1px solid lightgray; border-top: none;">
+        <div style="display: inline-block; float: right;" ng-click="goToCartHandler()" ><img style="padding: 5px" src="/App/Img/cart-64.png" />
         </div>
-        <div style="display:inline-block;">
-            <div class="modeldescr h">{{phone.Model}}</div>
-            <div class="modeldescr price">Price: {{phone.Price}}</div>
-            <div class="modeldescr" >Camera: {{phone.Camera}}</div>
-            <div class="modeldescr" >Screen: {{phone.DisplaySize}}"</div>
-            <div class="modeldescr" >
-                Dual Sim: <input type="checkbox" disabled ng-checked="{{phone.DualSim}}" />
+        <div style="display: inline-block; float: right; ">
+            {{itemsInCart}}
+        </div>
+    </div>
+    <div style="width: 822px; padding:5px; margin:auto; border: 1px solid lightgray; border-top: none;">
+        <div class="shopitem" ng-repeat="phone in phones" style="width: 270px; display: inline-block;">
+            <div style="display:inline-flex; position: relative;">
+                <img style="height: 150px; " ng-src="{{ phone.url}}" /><br/>
             </div>
-            <button class="btn btn-default" ng-click="onAddButtonClick(phone)">Add to cart</button>
+            <div style="display:inline-block;">
+                <div class="modeldescr h">{{phone.Model}}</div>
+                <div class="modeldescr price">Price: {{phone.Price}}</div>
+                <div class="modeldescr" >Camera: {{phone.Camera}}</div>
+                <div class="modeldescr" >Screen: {{phone.DisplaySize}}"</div>
+                <div class="modeldescr" >Dual Sim: <input type="checkbox" disabled ng-checked="{{phone.DualSim}}" /></div>
+                <button class="btn btn-default" ng-click="productClickHandler(phone)" >{{inCartToText(phone)}}</button>
+            </div>
         </div>
     </div>
 </div>
