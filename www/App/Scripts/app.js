@@ -1,15 +1,32 @@
+var placeholder = null;
+
 angular.module('app', ['ngRoute'])
 
 .config(['$routeProvider', ($routeProvider) => {
     $routeProvider.when('/', { 
         templateUrl:'/App/client/Templates/main.html',
         Controller: 'AppController'
-    })
+    });
 
     $routeProvider.when('/cart', {
         templateUrl: '/App/client/Templates/cart.html',
         Controller: 'CartController'
-    })
+    });
+
+    $routeProvider.when('/ordering', {
+        templateUrl: '/App/client/Templates/ordering.html',
+        Controller: 'CartController'
+    });
+
+    $routeProvider.when('/succeed', {
+        templateUrl: '/App/client/Templates/orderSucceed.html',
+        Controller: 'CartController'
+    });
+
+    $routeProvider.when('/failure', {
+        templateUrl: '/App/client/Templates/orderFailed.html',
+        Controller: 'CartController'
+    });
 }])
 
 .service('cartService', function () {
@@ -20,14 +37,9 @@ angular.module('app', ['ngRoute'])
   };
   var count = () => {
       return productList.length;
-  }
+  };
   var getProducts = () =>{
       return productList;
-  };
-  var getProduct = (model, brand) => {
-    productList.find((e) => {
-        return e.Model == model && e.Brand == brand;
-    })
   };
   var removeProduct = (phone) => {
     var index = productList.findIndex((e) => {
@@ -41,9 +53,22 @@ angular.module('app', ['ngRoute'])
     addProduct: addProduct,
     getProducts: getProducts,
     count: count,
-    // getProduct: getProduct,
     removeProduct: removeProduct
   };
+})
+.service('errorService', function() {
+    var error = null;
+    var setError = (data) => {
+        error = data;
+        console.log(error);
+    };
+    var getError = () => {
+        return error;
+    };
+    return {
+        setError: setError,
+        getError: getError
+    };
 })
 
 .controller('AppController', ['$scope', '$http', 'cartService', '$location', ($scope, $http, cartService, $location) => {
@@ -75,8 +100,14 @@ angular.module('app', ['ngRoute'])
     };
 }])
 
-.controller('CartController', ['$scope', '$http', 'cartService', ($scope, $http, cartService) => {
-    
+.controller('CartController', ['$scope', '$http', 'cartService', 'errorService', '$location', '$httpParamSerializerJQLike', ($scope, $http, cartService, errorService, $location, $httpParamSerializerJQLike) => {
+    $scope.error = errorService.getError();
+
+    $scope.canProcceed = () => {
+        console.log(cartService.count());
+        return (cartService.count() === 0) ? true : false;
+    };
+
     $scope.orderlist = cartService.getProducts();
         var sum = 0.0;
         $scope.orderlist.forEach((e) => {
@@ -87,37 +118,52 @@ angular.module('app', ['ngRoute'])
         console.log('cart');
 
     $scope.procceedOrder = () => {
-        console.log('orderprocceed');
-        console.log(JSON.stringify(cartService.getProducts()));
-        $.ajax({
-            type: "POST",
-            url: '/cartapi/procceedorder',
-            data: 'order=' + JSON.stringify(cartService.getProducts()),
-            success: (response) => {
-                console.log(response);
-            },
-            error: (error) => {
-                console.log(error);
-            }
-            // dataType: dataType
-        });
+
+        $location.path('/ordering');
+
+        return;
+
+        // console.log('orderprocceed');
+        // console.log(JSON.stringify(cartService.getProducts()));
+        // $scope.errorToInfo = () => {
+        //     // return ($scope.error.invalid_products === null) ? $scope.error.msg : $scope.error.msg + 
+        // };
+
+        // var getError = () => {
+        //     return errorService.getError();
+        // };
+        
         // $http(
         //     {
         //         method: 'POST',
         //         url: '/cartapi/procceedorder',
-        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-        //         data: 'order=' + encodeURIComponent(JSON.stringify(cartService.getProducts()))
-        //         //'order=' + JSON.stringify(cartService.getProducts()),
+        //         data: $httpParamSerializerJQLike(
+        //             {
+        //                 order: JSON.stringify(cartService.getProducts())
+        //             }
+        //         ),
+        //         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         //     }
-        // ).then((data, status, header, config) => {
-        //     console.log(data);
-        // },
-        // (error) => {
-        //     console.log(error);
-        // }
-        //  );
+        // ).then(
+        //     (response) => {
+        //         // $scope.error = response.data;
+        //         if (!response.data.status)
+        //         {
+        //             errorService.setError(response.data);
+        //             $location.path('/failure');
+        //         }
+        //         else 
+        //         {
+        //             $location.path('/succeed');
+        //         }
+        //             console.log(response.data);
+        //         // $scope.$apply();
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //     }
+        // )
 
-        //  $()
-
+        
     }
 }]);

@@ -1,0 +1,59 @@
+<style>
+			.form_block {
+				width: 600px;
+				/*border: 1px solid lightgray;*/
+				padding: 5px;
+			}
+			.centered {
+				margin:auto;
+			}
+			.form_head {
+				font-size: 14pt;
+                width: 100%;
+                padding: 5px;
+                padding-left: 15px;
+                border: 1px solid lightgray;
+                border-bottom: none;
+			}
+			.block {
+				display: block;
+			}
+            form {
+                border: 1px solid lightgray;
+            }
+            p {
+                padding: 10px;
+                padding-bottom: 0;
+                text-align: left;
+            }
+            input[type=text], input[type=email], input[type=checkbox] {
+                height: 40px;
+                font-size: 12pt;
+                padding: 5px;
+                width: 570px;
+            }
+            input[type=checkbox] {
+                width: 15px;
+                height: 15px;
+                /*background: red;*/
+            }
+</style>
+<script>
+    function onCheckBoxStateChange() {
+        document.forms[0]['phone'].disabled = document.forms[0]['phone'].disabled ^ true;
+    }
+</script>
+<div class="centered form_block">
+    <div class="form_head block">
+        Order offering
+    </div>
+    <form ng-submit="">
+        <p><span>How shall we call you?</span><input type="text" placeholder="John Shepard" name="name" /></p>
+        <p><span>Your email</span><input type="email" placeholder="j.shepard@mail.com" name="email" /></p>
+        <p><input name="donotcallme" onchange="onCheckBoxStateChange()" type="checkbox"/><span style="font-size: 12pt;"> Do not call me</span></p>
+        <p><span>Your phone number</span><input type="text" placeholder="+38 (000) 00 000 00" name="phone" /></p>
+        <p><span>Where to deliever?</span><input type="text" placeholder="Lviv, St.Banderu st. 19" name="address" /></p>
+        <p style="text-align: right"><button class="btn btn-primary">Complete</button>&nbsp;&nbsp;<button class="btn btn-default">Continue shopping</button></p>
+    </form>
+    
+</div>
