@@ -7,7 +7,7 @@
         {
             parent::__construct(new PhonesDataProvider());
         }
-        public function procceedOrder($orderList)
+        public function procceedOrder($orderList, $clientinfo)
         {
             // make sure orderList is not empty
             if (is_null($orderList) || count($orderList) == 0)
@@ -32,6 +32,8 @@
             if (is_null($notFoundList) || count($notFoundList) == 0)
             {
                 // send email to client
+                // with $clientinfo variable
+                // also check for valid info
                 // send email to admin@shop.dev
                 return (object)['status' => true, 'msg' => ''];
             }
