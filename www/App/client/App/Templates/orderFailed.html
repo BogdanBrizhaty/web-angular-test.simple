@@ -1,6 +1,15 @@
+<style>
+    .none {
+        display: none;
+    }
+    .block {
+        display: block;
+    }
+</style>
 <div ng-controller="CartController" class="h">
     <span>Sorry, we could not procceed your order, looks like something went wrong.</span><br/> 
     <span>Detailed info: <br/> <span ng-bind="error.msg"></span>
     <br/>
+    <!--<span ng-class="display_invalid_list">Next products were not found:</span><br/>-->
     <span ng-repeat="phone in error.invalid_products">{{phone.Model}}<br/></span>
 </div>

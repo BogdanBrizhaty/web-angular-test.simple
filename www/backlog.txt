@@ -12,3 +12,7 @@
         view appending and rebuilding
         
 
+// TODO ## : TITLE                                                                                                      : FLAG
+        04 : Restructurize project, divide client into subfolders                                                       :  Y
+        05 : Make form validation in ordering                                                                           :  N
+        06 : 
