@@ -51,9 +51,10 @@ app.controller('OrderingController', ['$scope', '$http', 'cartService', 'errorSe
         var char = getChar(event);
         var sender = event.currentTarget;
 
+        $scope.emailValidationError = '';
+
         event.preventDefault();
 
-        $scope.emailValidationError = '';
 
         if (sender.value.includes('@'))
         {
@@ -73,16 +74,22 @@ app.controller('OrderingController', ['$scope', '$http', 'cartService', 'errorSe
         else
         {
             if (sender.value.length == 0 && char === '.')
+            {
+                $scope.emailValidationError = 'email can not start with dot';
                 return;
+            }
             
             if ((sender.value + char).includes('..'))
+            {
+                $scope.emailValidationError = 'email can not contain two located together dots';
                 return;
+            }
             // if with local-part
             if (char === '@')
             {
                 if (sender.value.endsWith('.'))
                 {
-                    $scope.emailValidationError = 'left part of email address can not end with dot!'
+                    $scope.emailValidationError = 'Left part of email address can not end with dot!'
                     return;
                 }
                 sender.value += char;

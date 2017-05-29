@@ -20,6 +20,8 @@
         <script src="/App/client/App/Controllers/CartController.js"></script>
         <script src="/App/client/App/Controllers/OrderingController.js"></script>
 		
+        <script src="/App/client/Scripts/hint.js"></script>
+
 		<style>
 
 		</style>

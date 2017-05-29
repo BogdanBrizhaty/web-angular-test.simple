@@ -15,4 +15,6 @@
 // TODO ## : TITLE                                                                                                      : FLAG
         04 : Restructurize project, divide client into subfolders                                                       :  Y
         05 : Make form validation in ordering                                                                           :  N
-        06 : 
+        06 : Email on-blur validation
+        07 : name on-blur navigation
+        08 : phone on-blur navigation
