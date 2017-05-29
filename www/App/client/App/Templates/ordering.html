@@ -49,9 +49,9 @@
     </div>
     <form ng-submit="submit()">
         <p><span>How shall we call you?</span><input ng-keypress="nameKeyPressed()" ng-model="userInfo.name" type="text" placeholder="John Shepard" name="name" /></p>
-        <p><span>Your email</span><input ng-model="userInfo.email" type="email" placeholder="j.shepard@mail.com" name="email" /></p>
+        <p><span>Your email</span><input ng-keypress="emailKeyPressed()" ng-model="userInfo.email" type="email" placeholder="j.shepard@mail.com" name="email" /></p>
         <p><input name="donotcallme" ng-model="userInfo.donotcallme" onchange="onCheckBoxStateChange()" type="checkbox"/><span style="font-size: 12pt;"> Do not call me</span></p>
-        <p><span>Your phone number</span><input ng-model="userInfo.phone" type="text" placeholder="+38 (000) 00 000 00" name="phone" /></p>
+        <p><span>Your phone number</span><input ng-keypress="phoneKeyPressed()"  ng-model="userInfo.phone" type="text" placeholder="+38 (000) 00 000 00" name="phone" /></p>
         <p><span>Where to deliever?</span><input ng-model="userInfo.address" type="text" placeholder="Lviv, St.Banderu st. 19" name="address" /></p>
         <p style="text-align: right"><input type="submit" value="Complete" class="btn btn-primary" />&nbsp;&nbsp;<button class="btn btn-default">Continue shopping</button></p>
     </form>
