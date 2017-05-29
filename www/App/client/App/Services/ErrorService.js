@@ -1,14 +1,19 @@
 app.service('errorService', function() {
-    var error = null;
-    var setError = (data) => {
-        error = data;
+    // key-value array
+    var error = [];
+    var setError = (key, data) => {
+        error[key] = data;
         console.log(error);
     };
-    var getError = () => {
-        return error;
+    var getError = (key) => {
+        return error[key];
+    };
+    var remError = (key) => {
+        delete error[key];
     };
     return {
         setError: setError,
-        getError: getError
+        getError: getError,
+        remError: remError
     };
 });
