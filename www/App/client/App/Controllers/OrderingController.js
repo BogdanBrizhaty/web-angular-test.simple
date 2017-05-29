@@ -8,33 +8,26 @@ app.controller('OrderingController', ['$scope', '$http', 'cartService', 'errorSe
         donotcallme: false
     };
     
-    // var passwordRegExp = /(?=.*\d+)(?=.*[A-Z]+)(?=.*[a-z]+)^[A-Za-z0-9]{6,15}$/;
-    // var nameRegEx = /(?=^.{10}\s?.{10}$)[A-Za-z ]/g;
     var nameRegEx = /^[A-Za-z\s]{0,30}$/;
-    var emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var phoneRegEx = /^\+?[0-9]{0,12}$/;
     
-    var regExValidation = (regEx, event) => {
+    var emailLocalPartRegEx = /^[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~\.]{0,64}$/;
+    var emailDomainPartRegEx = /^([A-Za-z0-9\-]{1,63}\.){1,3}[A-Za-z0-9\-]{1,63}$/;
 
-        event.preventDefault();
-        event.currentTarget.value += (regEx.test((event.currentTarget.value + getChar(event))) === false /* || (event.currentTarget.value === '+' && getChar(event) === '+' ) */) ? '' : getChar(event);
-        return;
+    var  getChar = function (event) {
+    if (event.which == null) { // IE
+        if (event.keyCode < 32) return null; // спец. символ
+        return String.fromCharCode(event.keyCode)
     }
-var  getChar = function (event) {
-  if (event.which == null) { // IE
-    if (event.keyCode < 32) return null; // спец. символ
-    return String.fromCharCode(event.keyCode)
-  }
 
-  if (event.which != 0 && event.charCode != 0) { // все кроме IE
-    if (event.which < 32) return null; // спец. символ
-    return String.fromCharCode(event.which); // остальные
-  }
+    if (event.which != 0 && event.charCode != 0) { // все кроме IE
+        if (event.which < 32) return null; // спец. символ
+        return String.fromCharCode(event.which); // остальные
+    }
 
-  return null; // спец. символ
-}
+    return null; // спец. символ
+    }
 
-    // regExValidation()
     $scope.nameKeyPressed = () => {
         // regExValidation(nameRegEx, event);
         // console.log(event.currentTarget.value);
@@ -51,26 +44,72 @@ var  getChar = function (event) {
 
     };
     $scope.emailKeyPressed = () => {
-        regExValidation(emailRegEx, event);
+
+        var allowedLocalPartSymbols = /[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~\.]/;
+        var allowedDomainPartSymbols = /[A-Za-z0-9\.\-]/;
+        var partialDomainRegEx = /^[A-Za-z0-9\-]+\.?/;
+        var char = getChar(event);
+        var sender = event.currentTarget;
+
+        event.preventDefault();
+
+        $scope.emailValidationError = '';
+
+        if (sender.value.includes('@'))
+        {
+            // if we working with domain part
+            if (char === '@')
+                return;
+            var domain = sender.value.substring(sender.value.indexOf('@') + 1, sender.value.length);
+
+            if (domain === '' && allowedDomainPartSymbols.test(char) && char !== '.' || partialDomainRegEx.test(domain + char) && !domain.includes('.'))
+            {
+                sender.value += char;
+                return;
+            }
+            if (emailDomainPartRegEx.test(domain + char + 'a') || emailDomainPartRegEx.test(domain + char))
+                sender.value += char;
+        }
+        else
+        {
+            if (sender.value.length == 0 && char === '.')
+                return;
+            
+            if ((sender.value + char).includes('..'))
+                return;
+            // if with local-part
+            if (char === '@')
+            {
+                if (sender.value.endsWith('.'))
+                {
+                    $scope.emailValidationError = 'left part of email address can not end with dot!'
+                    return;
+                }
+                sender.value += char;
+            }
+            sender.value += (allowedLocalPartSymbols.test(char) && emailLocalPartRegEx.test(sender.value + char)) ? char : '';
+        }
+        
     };
     $scope.phoneKeyPressed = () => {
 
         var allowedSymbols = /[0-9]/;
 
         var char = getChar(event);
+        var sender = event.currentTarget;
         if (char === null)
             return;
 
         event.preventDefault();
 
-        event.currentTarget.value = (char === '+' && event.currentTarget.value.length == 0) ? char + event.currentTarget.value : event.currentTarget.value;
-        event.currentTarget.value += (allowedSymbols.test(char) && phoneRegEx.test(event.currentTarget.value.replace(/[\(\)\s]/g, '') + char)) ? char : '';
+        sender.value = (char === '+' && sender.value.length == 0) ? char + sender.value : sender.value;
+        sender.value += (allowedSymbols.test(char) && phoneRegEx.test(sender.value.replace(/[\(\)\s]/g, '') + char)) ? char : '';
 
-        var offset = (event.currentTarget.value.includes('+')) ? 0 : -1;
-        event.currentTarget.value += (event.currentTarget.value.length == 3 + offset) ? ' (' : '';
-        event.currentTarget.value += (event.currentTarget.value.length == 8 + offset) ? ') ' : '';
-        event.currentTarget.value += (event.currentTarget.value.length == 12 + offset) ? ' ' : '';
-        event.currentTarget.value += (event.currentTarget.value.length == 16 + offset) ? ' ' : '';
+        var offset = (sender.value.includes('+')) ? 0 : -1;
+        sender.value += (sender.value.length == 3 + offset) ? ' (' : '';
+        sender.value += (sender.value.length == 8 + offset) ? ') ' : '';
+        sender.value += (sender.value.length == 12 + offset) ? ' ' : '';
+        sender.value += (sender.value.length == 16 + offset) ? ' ' : '';
 
     };
 
@@ -89,7 +128,7 @@ var  getChar = function (event) {
             (response) => {
                 if (!response.data.status)
                 {
-                    errorService.setError(response.data);
+                    errorService.setError('responseError', response.data);
                     $location.path('/failure');
                 }
                 else 

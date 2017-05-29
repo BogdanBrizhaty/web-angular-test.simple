@@ -37,6 +37,10 @@
                 height: 15px;
                 /*background: red;*/
             }
+            .error {
+                font-size: 10pt;
+                color: #D50000;
+            }
 </style>
 <script>
     function onCheckBoxStateChange() {
@@ -49,7 +53,8 @@
     </div>
     <form ng-submit="submit()">
         <p><span>How shall we call you?</span><input ng-keypress="nameKeyPressed()" ng-model="userInfo.name" type="text" placeholder="John Shepard" name="name" /></p>
-        <p><span>Your email</span><input ng-keypress="emailKeyPressed()" ng-model="userInfo.email" type="email" placeholder="j.shepard@mail.com" name="email" /></p>
+        <p><span>Your email</span><input ng-keypress="emailKeyPressed()" ng-model="userInfo.email" type="email" placeholder="j.shepard@mail.com" name="email" />
+        <span class="error">{{emailValidationError}}</span></p>
         <p><input name="donotcallme" ng-model="userInfo.donotcallme" onchange="onCheckBoxStateChange()" type="checkbox"/><span style="font-size: 12pt;"> Do not call me</span></p>
         <p><span>Your phone number</span><input ng-keypress="phoneKeyPressed()"  ng-model="userInfo.phone" type="text" placeholder="+38 (000) 00 000 00" name="phone" /></p>
         <p><span>Where to deliever?</span><input ng-model="userInfo.address" type="text" placeholder="Lviv, St.Banderu st. 19" name="address" /></p>

@@ -1,5 +1,5 @@
 app.controller('CartController', ['$scope', '$http', 'cartService', 'errorService', '$location', ($scope, $http, cartService, errorService, $location) => {
-    $scope.error = errorService.getError();
+    $scope.error = errorService.getError('responseError');
 
     $scope.canProcceed = () => {
         console.log(cartService.count());
