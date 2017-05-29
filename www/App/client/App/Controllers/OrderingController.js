@@ -10,13 +10,11 @@ app.controller('OrderingController', ['$scope', '$http', 'cartService', 'errorSe
     
     // var passwordRegExp = /(?=.*\d+)(?=.*[A-Z]+)(?=.*[a-z]+)^[A-Za-z0-9]{6,15}$/;
     // var nameRegEx = /(?=^.{10}\s?.{10}$)[A-Za-z ]/g;
-    var nameRegEx = /(?=\+?.)[0-9\+]{13}/;
+    var nameRegEx = /^[A-Za-z\s]{0,30}$/;
     var emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var phoneRegEx = /^\+?[0-9]{0,12}$/;
     
     var regExValidation = (regEx, event) => {
-        // console.log(event.currentTarget.value + getChar(event));
-        // console.log(regEx.test((event.currentTarget.value + getChar(event))));
 
         event.preventDefault();
         event.currentTarget.value += (regEx.test((event.currentTarget.value + getChar(event))) === false /* || (event.currentTarget.value === '+' && getChar(event) === '+' ) */) ? '' : getChar(event);
@@ -38,8 +36,19 @@ var  getChar = function (event) {
 
     // regExValidation()
     $scope.nameKeyPressed = () => {
-        regExValidation(nameRegEx, event);
+        // regExValidation(nameRegEx, event);
         // console.log(event.currentTarget.value);
+        var allowedSymbols = /[A-Za-z\s]/;
+
+        var char = getChar(event);
+        console.log (char);
+        if (char === null)
+            return;
+
+        event.preventDefault();
+
+        event.currentTarget.value += (allowedSymbols.test(char) && nameRegEx.test(event.currentTarget.value + char)) ? char : '';
+
     };
     $scope.emailKeyPressed = () => {
         regExValidation(emailRegEx, event);
